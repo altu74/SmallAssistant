@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:smallAssistant="clr-namespace:SmallAssistant;assembly=SmallAssistant"
+             x:Class="SmallAssistant.ViewModels.RateEdit"
+             Title="Редактирование тарифа">
+  <ContentPage.Resources>
+  </ContentPage.Resources>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Сохранить" Order="Primary" Command="{Binding SaveCommand}" CommandParameter="{Binding Param}"></ToolbarItem>
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+      <Label Text="Название тарифа" FontAttributes="Bold"/>
+      <Entry x:Name="RateNameEditor" Text="{Binding Item.RateName, Mode=TwoWay}" />
+      <Label Text="Тип тарифа" FontAttributes="Bold"/>
+      <Picker Title="Тип тарифа" ItemsSource="{Binding RateTypes, Mode=TwoWay}" SelectedItem="{Binding SelectedRateType}" SelectedIndexChanged="Picker_OnSelectedIndexChanged" ItemDisplayBinding="{Binding RateTypeName}"/>
+      <Label Text="" FontAttributes="Bold"/>
+      <DatePicker x:Name="DateSelector" MinimumDate="01/01/2018" Date="{Binding Item.ActiveFrom, Mode=TwoWay}" Format="dd.MM.yyyy" />
+      <ContentView x:Name ="EditView"  ControlTemplate="{StaticResource MultiValueEdit}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="5"/>
+      <!--<ContentPresenter x:Name="EditLayout" Content="{StaticResource View}"/>-->
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

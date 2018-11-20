@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:SmallAssistant.CustomControls;assembly=SmallAssistant"
+             x:Class="SmallAssistant.ViewModels.RatesView"
+             Title="Тарифы"
+             x:Name="RatesPage"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="TitleStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="LineBreakMode" Value="WordWrap"/>
+      </Style>
+      <Style x:Key="DigitsStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="HorizontalTextAlignment" Value="End"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <AbsoluteLayout>
+      <ScrollView BackgroundColor="PapayaWhip" Orientation="Horizontal" AbsoluteLayout.LayoutFlags="All"
+                  AbsoluteLayout.LayoutBounds="0,1,1,1" >
+        <ListView x:Name="Rates"
+                      HasUnevenRows="True"
+                      IsGroupingEnabled="True"
+                      ItemsSource="{Binding RateItems}"
+                      ItemTapped="OnItemTapped"
+                      Header="ViewHeader"
+                      Margin="2"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding BindingContext.RefreshCommand, Source={x:Reference RatesPage}}"
+                      WidthRequest="300"
+                      BackgroundColor="PapayaWhip"
+                      >
+          <ListView.HeaderTemplate>
+            <DataTemplate>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="160" />
+                  <ColumnDefinition Width="80" />
+                  <ColumnDefinition Width="80" />
+                  <ColumnDefinition Width="80" />
+                </Grid.ColumnDefinitions>
+                <BoxView Grid.Column="0" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <Label Grid.Column="0" Grid.Row="0" Text="Название тарифа" Style="{StaticResource TitleStyle}"/>
+                <BoxView Grid.Column="1" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <Label Grid.Column="1" Grid.Row="0" Text="Тип тарифа" Style="{StaticResource TitleStyle}"/>
+                <BoxView Grid.Column="2" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <Label Grid.Column="2" Grid.Row="0" Text="Значение тарифа" Style="{StaticResource TitleStyle}" />
+              </Grid>
+            </DataTemplate>
+          </ListView.HeaderTemplate>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <ViewCell.ContextActions>
+                  <MenuItem Text="Удалить тариф" Clicked="DeleteItem_OnClicked" CommandParameter="{Binding .}" IsDestructive="True"/>
+                </ViewCell.ContextActions>
+                <Grid RowSpacing="2">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Text="{Binding RateName}" FontSize="12"/>
+                  <Label Grid.Column="1" Text="{Binding RateTypeName}" FontSize="12"/>
+                  <Label Grid.Column="2" Text="{Binding RateValue, StringFormat='{0:#0.00}'}" Style="{StaticResource DigitsStyle}"/>
+                  <Label Grid.Column="3" Text="{Binding ActiveFrom, StringFormat='{0:dd.MM.yyyy}'}" FontSize="12"/>
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </ScrollView>
+      <customControls:ImageButton Command="{Binding BindingContext.AddCommand, Source={x:Reference RatesPage}}" Source="AddButton.png" BackgroundColor="Transparent" HeightRequest="50.0" WidthRequest="50.0" AbsoluteLayout.LayoutFlags="PositionProportional"
+             AbsoluteLayout.LayoutBounds="1.0,1.0,-1,-1"
+             Margin="10" />
+    </AbsoluteLayout>
+  </ContentPage.Content>
+</ContentPage>

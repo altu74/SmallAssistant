@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:SmallAssistant.CustomControls;assembly=SmallAssistant"
+             x:Class="SmallAssistant.ViewModels.MetersView"
+             Title="Счетчики"
+             x:Name="MetersPage">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="TitleStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+        <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+      </Style>
+      <Style x:Key="RowStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+        <Setter Property="HorizontalTextAlignment" Value="Start"></Setter>
+        <Setter Property="VerticalTextAlignment" Value="Center"></Setter>
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <AbsoluteLayout>
+      <ScrollView BackgroundColor="PapayaWhip" Orientation="Horizontal" AbsoluteLayout.LayoutFlags="All"
+                  AbsoluteLayout.LayoutBounds="0,1,1,1" >
+      <ListView x:Name="metersView"
+                    ItemsSource="{Binding MeterItems}"
+                    ItemTapped="OnItemTapped"
+                    RefreshCommand="{Binding BindingContext.RefreshCommand, Source={x:Reference MetersPage}}"
+                    Header="ViewHeader"
+                    Margin="2">
+        <ListView.HeaderTemplate>
+          <DataTemplate>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35*" />
+                <ColumnDefinition Width="25*" />
+                <ColumnDefinition Width="25*" />
+                <ColumnDefinition Width="20*" />
+              </Grid.ColumnDefinitions>
+              <BoxView Grid.Column="0" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+              <Label Grid.Column="0" Text="Тип счетчика" Style="{StaticResource TitleStyle}"/>
+              <BoxView Grid.Column="1" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+              <Label Grid.Column="1" Text="Тариф" Style="{StaticResource TitleStyle}"/>
+              <BoxView Grid.Column="2" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+              <Label Grid.Column="2" Grid.Row="0" Text="Тип тарифа" Style="{StaticResource TitleStyle}" />
+              <BoxView Grid.Column="3" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+              <Label Grid.Column="3" Text="Значение" Style="{StaticResource TitleStyle}" />
+            </Grid>
+          </DataTemplate>
+        </ListView.HeaderTemplate>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <Grid RowSpacing="2">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="35*" />
+                  <ColumnDefinition Width="25*" />
+                  <ColumnDefinition Width="25*" />
+                  <ColumnDefinition Width="20*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Text="{Binding MeterName}" Style="{StaticResource RowStyle}"/>
+                <Label Grid.Column="1" Text="{Binding RateName}" Style="{StaticResource RowStyle}"/>
+                <Label Grid.Column="2" Text="{Binding RateTypeName}" Style="{StaticResource RowStyle}"/>
+                <Label Grid.Column="3" Text="{Binding RateValue, StringFormat='{0:#0.00}'}" Style="{StaticResource RowStyle}"/>
+              </Grid>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+      </ScrollView>
+      <customControls:ImageButton Command="{Binding BindingContext.AddCommand, Source={x:Reference MetersPage}}" Source="AddButton.png" BackgroundColor="Transparent" HeightRequest="50.0" WidthRequest="50.0" AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  AbsoluteLayout.LayoutBounds="1.0,1.0,-1,-1"
+                                  Margin="10" />
+    </AbsoluteLayout>
+  </ContentPage.Content>
+</ContentPage>

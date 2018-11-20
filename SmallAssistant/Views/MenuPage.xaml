@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:local="clr-namespace:SmallAssistant.ViewModels"
+             xmlns:models="clr-namespace:SmallAssistant.Models;assembly=SmallAssistant"
+             x:Class="SmallAssistant.ViewModels.MenuPage"
+             Title="Small Assistant">
+  <ContentPage.Content>
+    <StackLayout>
+      <ListView x:Name="mainMenu" x:FieldModifier="public">
+        <ListView.ItemsSource>
+          <x:Array Type="{x:Type models:MainMenuItem }">
+            <models:MainMenuItem Title="Показания счетчиков" ImageSource="Meters.png" TargetType="{x:Type local:MetersValuesView}"/>
+            <models:MainMenuItem Title="Cчетчики" ImageSource="Meter.png" TargetType="{x:Type local:MetersView}"/>
+            <models:MainMenuItem Title="Тарифы" ImageSource="Rates.png" TargetType="{x:Type local:RatesView}"/>
+            <models:MainMenuItem Title="Настройки" ImageSource="Settings.png" />
+            <!--TargetType="{x:Type local:HistoryView}"/>-->
+          </x:Array>
+        </ListView.ItemsSource>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <Grid Padding="5,10">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="30"/>
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding ImageSource}" />
+                <Label Grid.Column="1" Text="{Binding Title}" FontSize="15" />
+              </Grid>
+            </ViewCell>
+          </DataTemplate>
+
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

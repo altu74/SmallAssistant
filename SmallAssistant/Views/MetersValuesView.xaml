@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:SmallAssistant.CustomControls;assembly=SmallAssistant"
+             x:Class="SmallAssistant.ViewModels.MetersValuesView"
+             Title="Показания счетчиков"
+             x:Name="MeterValuesPage"
+             >
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="TitleStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="LineBreakMode" Value="WordWrap"/>
+      </Style>
+      <Style x:Key="DigitsStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="End"/>
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Content>
+    <AbsoluteLayout>
+      <ScrollView BackgroundColor="PapayaWhip" Orientation="Horizontal" AbsoluteLayout.LayoutFlags="All"
+                  AbsoluteLayout.LayoutBounds="0,1,1,1" >
+        <ListView x:Name="Meters"
+                      HasUnevenRows="True"
+                      IsGroupingEnabled="True"
+                      ItemsSource="{Binding MeterValueItems}"
+                      ItemTapped="OnItemTapped"
+                      Header="ViewHeader"
+                      Margin="2"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding BindingContext.RefreshCommand, Source={x:Reference MeterValuesPage}}"
+                      WidthRequest="490"
+                      BackgroundColor="PapayaWhip"
+                      >
+          <ListView.HeaderTemplate>
+            <DataTemplate>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="160" />
+                  <ColumnDefinition Width="80" />
+                  <ColumnDefinition Width="80" />
+                  <ColumnDefinition Width="80" />
+                  <ColumnDefinition Width="80" />
+                </Grid.ColumnDefinitions>
+                <BoxView Grid.Column="0" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <Label Grid.Column="0" Grid.Row="0" Text="Тип счетчика" Style="{StaticResource TitleStyle}"/>
+                <BoxView Grid.Column="1" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <Label Grid.Column="1" Grid.Row="0" Text="Предыдущие показания" Style="{StaticResource TitleStyle}"/>
+                <BoxView Grid.Column="2" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <Label Grid.Column="2" Grid.Row="0" Text="Текущие показания" Style="{StaticResource TitleStyle}" />
+                <BoxView Grid.Column="3" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <Label Grid.Column="3" Grid.Row="0" Text="Разница" Style="{StaticResource TitleStyle}" />
+                <BoxView Grid.Column="4" Grid.Row="0" BackgroundColor="Gainsboro" WidthRequest="1" VerticalOptions="FillAndExpand" HorizontalOptions="End"/>
+                <Label Grid.Column="4" Grid.Row="0" Text="Сумма" Style="{StaticResource TitleStyle}" />
+              </Grid>
+            </DataTemplate>
+          </ListView.HeaderTemplate>
+          <ListView.GroupHeaderTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="{Binding Name, StringFormat='{0:dd.MM.yyyy}'}" FontSize="12" FontAttributes="Bold" />
+                  <Label Text="{Binding Total, StringFormat='{0:#0.00}'}" HorizontalOptions="EndAndExpand" FontSize="12" FontAttributes="Bold"/>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.GroupHeaderTemplate>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <ViewCell.ContextActions>
+                  <MenuItem Text="Удалить показания" Clicked="DeleteItem_OnClicked" CommandParameter="{Binding .}" IsDestructive="True"/>
+                </ViewCell.ContextActions>
+                <Grid RowSpacing="2">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                  </Grid.ColumnDefinitions>
+                  <Label Grid.Column="0" Text="{Binding MeterName}" FontSize="12"/>
+                  <Label Grid.Column="1" Text="{Binding MeterPrevValue, StringFormat='{0:#0.00}'}" Style="{StaticResource DigitsStyle}"/>
+                  <Label Grid.Column="2" Text="{Binding MeterCurrentValue, StringFormat='{0:#0.00}'}" Style="{StaticResource DigitsStyle}"/>
+                  <Label Grid.Column="3" Text="{Binding Delta, StringFormat='{0:#0.00}'}" Style="{StaticResource DigitsStyle}"/>
+                  <Label Grid.Column="4" Text="{Binding Amount, StringFormat='{0:#0.00}'}" Style="{StaticResource DigitsStyle}"/>
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </ScrollView>
+      <customControls:ImageButton Command="{Binding BindingContext.AddCommand, Source={x:Reference MeterValuesPage}}" Source="AddButton.png" BackgroundColor="Transparent" HeightRequest="50.0" WidthRequest="50.0" AbsoluteLayout.LayoutFlags="PositionProportional"
+             AbsoluteLayout.LayoutBounds="1.0,1.0,-1,-1"
+             Margin="10" />
+    </AbsoluteLayout>
+  </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=netstandard"
+             x:Class="SmallAssistant.ViewModels.MeterEdit"
+             Title="Редактирование счетчика">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Сохранить" Order="Primary" Command="{Binding SaveCommand}" CommandParameter="{Binding Param}"></ToolbarItem>
+  </ContentPage.ToolbarItems>
+  <ContentPage.Content>
+    <StackLayout>
+      <StackLayout>
+        <Label Text="Название счетчика" FontAttributes="Bold"/>
+        <Entry x:Name="MeterNameEditor" Text="{Binding Item.MeterCurrentValue, Mode=TwoWay}" />
+        <Label Text="Тариф" FontAttributes="Bold"/>
+        <Picker Title="Тариф" ItemsSource="{Binding Rates, Mode=TwoWay}" SelectedItem="{Binding SelectedRate}" SelectedIndexChanged="Picker_OnSelectedIndexChanged" ItemDisplayBinding="{Binding RateName}"/>
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>

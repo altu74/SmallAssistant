@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:SmallAssistant.CustomControls;assembly=SmallAssistant"
+             xmlns:validators="clr-namespace:SmallAssistant.Validators;assembly=SmallAssistant"
+             x:Class="SmallAssistant.Views.RateValuesControl">
+  <ContentView.Content>
+    <StackLayout>
+      <Label Text="Значения тарифа"/>
+      <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+        <customControls:ImageButton Source="add_item.png" BackgroundColor="Transparent" HeightRequest="40" WidthRequest="40"/>
+        <customControls:ImageButton Source="remove_item.png" BackgroundColor="Transparent" HeightRequest="40" WidthRequest="40"/>
+      </StackLayout>
+      <ListView x:Name="RateValues"
+          ItemsSource="{TemplateBinding BindingContext.RateValues, Mode=TwoWay}"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                Header="ListHeader">
+        <ListView.HeaderTemplate>
+          <DataTemplate>
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="35*"/>
+                <ColumnDefinition Width="30*"/>
+              </Grid.ColumnDefinitions>
+              <Label Grid.Column="0" Text="Начальные показания"/>
+              <Label Grid.Column="1" Text="Конечные показания"/>
+              <Label Grid.Column="2" Text="Значение"/>
+            </Grid>
+          </DataTemplate>
+        </ListView.HeaderTemplate>
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="35*"/>
+                  <ColumnDefinition Width="35*"/>
+                  <ColumnDefinition Width="30*"/>
+                </Grid.ColumnDefinitions>
+                <Entry Grid.Column="0" Text="{Binding MeterValueFrom, Mode=TwoWay, StringFormat='{0:#0.00}'}" Placeholder="0.00" Keyboard="Numeric" >
+                  <Entry.Behaviors>
+                    <validators:NumericValidation/>
+                  </Entry.Behaviors>
+                </Entry>
+                <Entry Grid.Column="1" Text="{Binding MeterValueTo, Mode=TwoWay, StringFormat='{0:#0.00}'}" Placeholder="0.00" Keyboard="Numeric">
+                  <Entry.Behaviors>
+                    <validators:NumericValidation/>
+                  </Entry.Behaviors>
+                </Entry>
+                <Entry Grid.Column="2" Text="{Binding Value, Mode=TwoWay, StringFormat='{0:#0.00}'}" Placeholder="0.00" Keyboard="Numeric">
+                  <Entry.Behaviors>
+                    <validators:NumericValidation/>
+                  </Entry.Behaviors>
+                </Entry>
+              </Grid>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
+  </ContentView.Content>
+</ContentView>

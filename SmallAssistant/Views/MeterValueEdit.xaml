@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:System.ComponentModel;assembly=netstandard"
+             x:Class="SmallAssistant.ViewModels.MeterValueEdit"
+             x:Name="MeterValueEditView"
+             Title=" Редактирование показаний">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <converters:DecimalConverter x:Key="DecimalConverter" x:Name="DecimalConverter"/>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Сохранить" Order="Primary" Command="{Binding SaveCommand}" CommandParameter="{Binding Param}"></ToolbarItem>
+  </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+    <StackLayout>
+      <StackLayout>
+        <Label Text="Счетчик" FontAttributes="Bold"/>
+        <Picker Title="Тип счетчика" ItemsSource="{Binding Meters, Mode=TwoWay}" SelectedItem="{Binding SelectedMeter}" SelectedIndexChanged="Picker_OnSelectedIndexChanged" ItemDisplayBinding="{Binding MeterName}" IsEnabled="{Binding IsNewItem}"/>
+        <Label Text="Дата" FontAttributes="Bold"/>
+        <DatePicker x:Name="DateSelector" MinimumDate="01/01/2018" Date="{Binding Item.MeterValueDate, Mode=TwoWay}" Format="dd.MM.yyyy"  IsEnabled="{Binding IsNewItem}"/>
+        <Label Text="Показания счетчика" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start" FontAttributes="Bold" />
+        <Entry x:Name="MeterValueEditor" Text="{Binding Item.MeterCurrentValue, Mode=TwoWay, StringFormat='{0:#0.00}'}" Keyboard="Numeric" />
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
