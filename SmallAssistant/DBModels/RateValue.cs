@@ -16,6 +16,7 @@ namespace SmallAssistant.DBModels
         public decimal? MeterValueTo { get; set; }
         public TimeSpan? TimeFrom { get; set; }
         public TimeSpan? TimeTo { get; set; }
+        public bool IsActive { get; set; }
         [Required]
         public DateTime ActiveFrom { get; set; }
         [Required]

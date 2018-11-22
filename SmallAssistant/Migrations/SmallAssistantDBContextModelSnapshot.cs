@@ -105,6 +105,8 @@ namespace MigrationGeneration.Migrations
 
                     b.Property<DateTime>("ActiveFrom");
 
+                    b.Property<bool>("IsActive");
+
                     b.Property<decimal?>("MeterValueFrom");
 
                     b.Property<decimal?>("MeterValueTo");

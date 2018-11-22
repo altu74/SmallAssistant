@@ -51,6 +51,7 @@ namespace SmallAssistant.ViewModels
 
         public RateType SelectedRateType { get; set; }
         public SaveRateCommand SaveCommand { get; private set; }
+        public AddRateValueCommand AddCommand { get; private set; }
         public ObservableCollection<Meter> Meters { get; private set; }
         public SaveRateCommandParameter Param { get; set; }
 
@@ -64,6 +65,7 @@ namespace SmallAssistant.ViewModels
                 BindingContext = this;
                 GetDataDictionaries();
                 SaveCommand = new SaveRateCommand();
+                AddCommand = new AddRateValueCommand();
                 InitializeComponent();
                 _sigleValueEdit = (ControlTemplate) Application.Current.Resources["SingleValueEdit"];
                 _multiValueEdit = (ControlTemplate)Application.Current.Resources["MultiValueEdit"];
@@ -103,6 +105,7 @@ namespace SmallAssistant.ViewModels
             }));
             RateValues = new ObservableCollection<RateValueViewItem>(valuesList);
             RateTypes = new ObservableCollection<RateType>(ctx.RateTypes);
+            Param.RateValues = RateValues;
         }
 
         private void Picker_OnSelectedIndexChanged(object sender, EventArgs e)
@@ -141,6 +144,8 @@ namespace SmallAssistant.ViewModels
     public class SaveRateCommandParameter : INotifyPropertyChanged
     {
         private RateViewItem _item;
+        private ObservableCollection<RateValueViewItem> _rateValues;
+
         public bool IsNewItem { get; set; }
 
         public RateViewItem Item
@@ -149,6 +154,16 @@ namespace SmallAssistant.ViewModels
             set
             {
                 _item = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<RateValueViewItem> RateValues
+        {
+            get { return _rateValues; }
+            set
+            {
+                _rateValues = value;
                 OnPropertyChanged();
             }
         }
